@@ -22,7 +22,6 @@ function createEl(tag, params) {
 
 async function buildIcon(str) {
   const src = str.endsWith('.svg') ? str : `assets/icons/${str}.svg`;
-  console.log('src:', src);
   try {
     const resp = await fetch(src);
     const svg = await resp.text();
