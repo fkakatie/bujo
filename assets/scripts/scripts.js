@@ -40,7 +40,8 @@ async function buildIcon(str) {
 
 function swapIcons(el) {
   el.querySelectorAll('img[data-type="icon"][src]').forEach(async (iconImg) => {
-    const icon = await buildIcon(iconImg.src);
+    const { pathname } = new URL(iconImg.src);
+    const icon = await buildIcon(pathname.slice(1));
     if (icon) iconImg.replaceWith(icon);
   });
 }
