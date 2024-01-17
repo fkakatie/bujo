@@ -1,0 +1,401 @@
+:root {
+  --color-fuschia: #83004A;
+  --color-red: #A42F00;
+  --color-orange: #A46D00;
+  --color-yellow: #A49500;
+  --color-green: #690;
+  --color-teal: #007040;
+  --color-teal-light: #0C8752;
+  --color-teal-dark: #005832;
+  --color-blue: #0B296E;
+  --color-purple: #350A6F;
+  --color-white: #eee;
+  --color-gray: #ddd;
+  --color-black: #444;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  outline: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+body {
+  background-color: var(--color-green);
+  color: var(--color-black);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 12px;
+}
+
+main[data-view="dash"] {
+  background-color: var(--color-white);
+}
+
+header, main, footer {
+  width: 100%;
+  max-width: 100%;
+  margin: 2rem 0;
+}
+
+header {
+  color: var(--color-white);
+  text-align: center;
+}
+
+header > section,
+main > section,
+footer > section,
+header > div,
+main > div,
+footer > div {
+  margin: 0 1rem;
+}
+
+svg {
+  max-width: 100%;
+  height: 1rem;
+}
+
+i.icon-spinner {
+  animation: spin 3s infinite ease-in-out;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* login form */
+.login form {
+  display: flex;
+  position: relative;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border-radius: .3rem;
+  padding: 1rem;
+}
+
+.login form.invalid {
+  outline: 3px solid var(--color-red);
+}
+
+.login form label { 
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-black);
+  opacity: .3;
+}
+
+.login form label[data-status="hidden"] {
+  visibility: hidden;
+}
+
+.login form input {
+  flex-grow: 1;
+  font-family: monospace;
+}
+
+.login form .buttons {
+  display: flex;
+  gap: .3rem;
+}
+
+.login form button,
+.login form button i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login form button {
+  padding: .5rem;
+  border-radius: .3rem;
+  cursor: pointer;
+  transition: background-color .3s;
+}
+
+.login form button svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.login form button i.icon-eye,
+.login form button i.icon-unlock {
+  display: none;
+}
+
+.login form button:hover,
+.login form button:focus {
+  background-color: var(--color-gray);
+}
+
+.login form button[data-status="authenticating"] {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.login form button[aria-selected="true"] i.icon-eye,
+.login form button[aria-selected="false"] i.icon-eye-closed,
+.login form button:hover i.icon-unlock,
+.login form button:focus i.icon-unlock,
+.login form button[aria-selected="true"]:hover i.icon-eye-closed,
+.login form button[aria-selected="true"]:focus i.icon-eye-closed,
+.login form button[aria-selected="false"]:hover i.icon-eye,
+.login form button[aria-selected="false"]:focus i.icon-eye {
+  display: flex;
+}
+
+.login form button[aria-selected="true"] i.icon-eye-closed,
+.login form button[aria-selected="false"] i.icon-eye,
+.login form button:hover i.icon-lock,
+.login form button:focus i.icon-lock,
+.login form button[aria-selected="true"]:hover i.icon-eye,
+.login form button[aria-selected="true"]:focus i.icon-eye,
+.login form button[aria-selected="false"]:hover i.icon-eye-closed,
+.login form button[aria-selected="false"]:focus i.icon-eye-closed,
+.login form button[data-status="authenticating"] i.icon-lock,
+.login form button[data-status="authenticating"] i.icon-unlock {
+  display: none;
+}
+
+@media (width >= 600px) {
+  .login form #toggle-password {
+    display: none;
+  }
+}
+
+/* week */
+.week {
+  display: flex;
+  justify-content: space-between;
+  gap: .3rem;
+  margin-top: 1rem;
+}
+
+.week .day-of-week {
+  max-width: 36px;
+  border: 1px solid transparent;
+  border-radius: 3rem;
+  padding: .6rem .4rem .4rem;
+  opacity: .6;
+  transition: border-color .3s;
+  cursor: pointer;
+}
+
+.week .day-of-week:hover {
+  border-color: var(--color-white);
+  opacity: 1;
+}
+
+.week .day-of-week[aria-selected="true"] {
+  border-color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-green);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.week .day-of-week .day-text {
+  font-size: 50%;
+  text-transform: uppercase;
+}
+
+.week .day-of-week .day-num {
+  display: inline-block;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-top: .3rem;
+  border: 1px solid;
+  border-radius: 50%;
+  padding: .15rem;
+}
+
+.week .day-of-week[aria-selected="true"] .day-num {
+  border-color: var(--color-green);
+  background-color: var(--color-green);
+  color: var(--color-white);
+  font-weight: bold;
+}
+
+/* day */
+.day {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+/* task */
+.task {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr 1.5rem;
+  align-items: center;
+  gap: 1rem;
+  border-radius: .3rem;
+  padding: 1rem;
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.task[data-room="powder room"] {
+  background-color: var(--color-fuschia);
+}
+
+.task[data-room="garage"] {
+  background-color: var(--color-red);
+}
+
+.task[data-room="kitchen"] {
+  background-color: var(--color-orange);
+}
+
+.task[data-room="landing"] {
+  background-color: var(--color-yellow);
+}
+
+.task[data-room="katie's office"] {
+  background-color: var(--color-green);
+}
+
+.task[data-room="bedroom"] {
+  background-color: var(--color-teal);
+}
+
+.task[data-room="bathroom"] {
+  background-color: var(--color-teal-light);
+}
+
+.task[data-room="outdoor"] {
+  background-color: var(--color-teal-dark);
+}
+
+.task[data-room="living room"] {
+  background-color: var(--color-blue);
+}
+
+.task[data-room="russell's office"] {
+  background-color: var(--color-purple);
+}
+
+@keyframes pill {
+  0% { border-radius: 0.3rem; }
+  33% { border-radius: 2rem; }
+  66% { border-radius: 2rem; }
+  100% { border-radius: 0.3rem; }
+}
+
+.task[data-animate] {
+  animation: pill 1.3s ease-in-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.task.task-dummy {
+  animation: fade-in .3s ease-in;
+  cursor: wait;
+}
+
+.task .task-icon {
+  font-size: 200%;
+}
+
+.task .task-eyebrow {
+  font-size: 66%;
+  text-transform: uppercase;
+}
+
+.task .task-title {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.task .task-form label {
+  display: block;
+  position: relative;
+  height: 1.5rem;
+}
+
+.task .task-form input {
+  appearance: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  cursor: pointer;
+}
+
+.task .task-form label .task-checkbox {
+  position: absolute;
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 1.5px solid;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color .3s;
+}
+
+.task.task-dummy .task-form label .task-checkbox,
+.day[data-status="loading"] .task-form label .task-checkbox {
+  background-color: currentcolor;
+  opacity: .5;
+}
+
+.task .task-form label .task-checkbox::after {
+  content: "";
+  position: absolute;
+  display: none;
+  top: 4.5px;
+  left: 8px;
+  width: 5px;
+  height: 10px;
+  border: solid;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.task:not(.task-dummy) .task-form label input ~ .task-checkbox {
+  cursor: pointer;
+}
+
+.task:not(.task-dummy) .task-form label:hover input ~ .task-checkbox {
+  background-color: var(--color-white);
+}
+
+.task:not(.task-dummy) .task-form label input:checked ~ .task-checkbox {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.5) rotate(15deg); }
+  30% { transform: scale(1.5) rotate(-15deg); }
+  40% { transform: scale(1.5) rotate(15deg); }
+  50% { transform: scale(1.5) rotate(-15deg); }
+  60% { transform: scale(1.5) rotate(15deg); }
+  80% { transform: scale(1.5) rotate(-15deg); }
+  100% { transform: scale(1); }
+}
+
+.task:not(.task-dummy) .task-form label input:checked ~ .task-checkbox[data-animate] {
+  animation: pop 1.3s ease-in-out;
+}
+
+.task:not(.task-dummy) .task-form label input:checked ~ .task-checkbox::after {
+  display: block;
+  color: var(--color-black);
+}
+
+.task .task-form label input[disabled] ~ .task-checkbox,
+.day[data-status="loading"] .task .task-form label input[disabled] ~ .task-checkbox {
+  cursor: not-allowed !important;
+}
