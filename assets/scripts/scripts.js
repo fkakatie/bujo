@@ -22,6 +22,7 @@ function createEl(tag, params) {
 
 async function buildIcon(str) {
   const src = str.endsWith('.svg') ? str : `assets/icons/${str}.svg`;
+  console.log('src:', src);
   try {
     const resp = await fetch(src);
     const svg = await resp.text();
@@ -41,7 +42,7 @@ async function buildIcon(str) {
 function swapIcons(el) {
   el.querySelectorAll('img[data-type="icon"][src]').forEach(async (iconImg) => {
     const { pathname } = new URL(iconImg.src);
-    const icon = await buildIcon(pathname.slice(1));
+    const icon = await buildIcon(pathname);
     if (icon) iconImg.replaceWith(icon);
   });
 }
