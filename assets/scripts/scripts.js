@@ -21,7 +21,7 @@ function createEl(tag, params) {
 }
 
 async function buildIcon(str) {
-  const src = str.endsWith('.svg') ? str : `/assets/icons/${str}.svg`;
+  const src = str.endsWith('.svg') ? str : `assets/icons/${str}.svg`;
   try {
     const resp = await fetch(src);
     const svg = await resp.text();
@@ -47,7 +47,7 @@ function swapIcons(el) {
 
 async function fetchFragment(fragmentName) {
   try {
-    const resp = await fetch(`/fragments/${fragmentName}.html`);
+    const resp = await fetch(`fragments/${fragmentName}.html`);
     const fragmentText = await resp.text();
     const fragment = createEl('div', {
       html: fragmentText,
