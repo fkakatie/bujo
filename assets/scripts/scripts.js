@@ -107,29 +107,32 @@ function returnYMD(date) {
 }
 
 async function fetchCompletedTasks() {
-  const tracker = await gapi({ sheet: 'tracker' });
-  const log = {};
-  tracker.data.forEach((row) => {
-    const timestamp = new Date(row.timestamp);
-    const { yy, mm, dd } = returnYMD(timestamp);
-    const monthKey = `m${mm}`;
-    const dateKey = `d${mm}${dd}${yy}`;
-    // check if month
-    if (log[monthKey]) {
-      // check if date
-      if (log[monthKey][dateKey]) {
-        log[monthKey][dateKey].push(row);
+  if (!window.bujoComplete) {
+    const tracker = await gapi({ sheet: 'tracker' });
+    const log = {};
+    tracker.data.forEach((row) => {
+      const timestamp = new Date(row.timestamp);
+      const { yy, mm, dd } = returnYMD(timestamp);
+      const monthKey = `m${mm}`;
+      const dateKey = `d${mm}${dd}${yy}`;
+      // check if month
+      if (log[monthKey]) {
+        // check if date
+        if (log[monthKey][dateKey]) {
+          log[monthKey][dateKey].push(row);
+        } else {
+          log[monthKey][dateKey] = [row];
+        }
       } else {
+        log[monthKey] = {};
         log[monthKey][dateKey] = [row];
       }
-    } else {
-      log[monthKey] = {};
-      log[monthKey][dateKey] = [row];
-    }
-    window.bujoComplete = log;
-    return window.bujoComplete;
-  });
-  return log;
+      window.bujoComplete = log;
+      return window.bujoComplete;
+    });
+    return log;
+  }
+  return window.bujoComplete;
 }
 
 async function filterCompletedTasks(date = new Date()) {
@@ -190,9 +193,17 @@ function buildTask(el, task) {
   return el;
 }
 
-async function refreshTasks(day, date, index) {
-  const todayIndex = parseInt(document.querySelector('.week').parentElement.dataset.today, 10);
+async function refreshTasks(dateText, day, date, index) {
+  const week = document.querySelector('.week');
+  const todayIndex = parseInt(week.dataset.today, 10);
   const future = index > todayIndex;
+  // update header
+  const today = todayIndex === index;
+  const yesterday = todayIndex - index === 1;
+  const tomorrow = todayIndex + 1 === index;
+  const heading = document.querySelector('header h1');
+  // eslint-disable-next-line no-nested-ternary
+  heading.textContent = today ? 'today' : yesterday ? 'yesterday' : tomorrow ? 'tomorrow' : dateText;
   // clear all tasks
   day.querySelectorAll('.task[data-id]').forEach((task) => {
     const cb = task.querySelector('input');
@@ -251,6 +262,7 @@ async function buildWeek() {
       // reset day with completed tasks
       const [m, d, y] = day.dataset.dkey.replace('d', '').match(/.{1,2}/g).map((char) => parseInt(char, 10));
       refreshTasks(
+        day.dataset.day, // date text
         document.querySelector('.day'), // day el containing tasks
         new Date(`${m + 1}/${d}/${y}`), // date to filter by
         parseInt(day.dataset.index, 10), // index of date to filter by

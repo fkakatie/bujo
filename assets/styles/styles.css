@@ -204,7 +204,7 @@ i.icon-spinner {
   background-color: var(--color-white);
   color: var(--color-green);
   opacity: 1;
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .week .day-of-week .day-text {
