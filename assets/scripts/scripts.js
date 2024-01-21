@@ -275,6 +275,39 @@ async function buildWeek() {
   return week;
 }
 
+async function buildFilters() {
+  const filters = await fetchFragment('filters');
+  const buttons = [...filters.children];
+  buttons.forEach((filter) => {
+    const { type } = filter.dataset;
+    filter.addEventListener('click', (e) => {
+      e.preventDefault();
+      const selected = filter.getAttribute('aria-selected') === 'true';
+      buttons.forEach((button) => button.setAttribute('aria-selected', false));
+      filter.setAttribute('aria-selected', !selected);
+      const tasks = [...document.querySelectorAll('.task[data-id]')];
+      tasks.forEach((task) => task.removeAttribute('aria-hidden'));
+      if (!selected) {
+        tasks.forEach((task) => {
+          let meetsFilter = true;
+          const filterValue = task.dataset[type];
+          if (type === 'freq') {
+            meetsFilter = filterValue === '365';
+          } else if (type === 'mins') {
+            meetsFilter = parseInt(filterValue, 10) <= 10;
+          } else if (type === 'tool') {
+            meetsFilter = !!filterValue;
+          } else {
+            meetsFilter = filterValue === filter.textContent || filterValue === filter.getAttribute('aria-label');
+          }
+          if (!meetsFilter) task.setAttribute('aria-hidden', true);
+        });
+      }
+    });
+  });
+  return filters;
+}
+
 async function buildDashboard(main) {
   // eslint-disable-next-line no-param-reassign
   main.dataset.view = 'dash';
@@ -283,7 +316,8 @@ async function buildDashboard(main) {
   const header = document.querySelector('header');
   header.querySelector('h1').textContent = 'today';
   const week = await buildWeek();
-  header.append(week);
+  const filters = await buildFilters();
+  header.append(week, filters);
 
   const day = createEl('section', { class: 'day', 'data-status': 'loading' });
   main.append(day);

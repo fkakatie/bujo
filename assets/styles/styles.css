@@ -229,6 +229,30 @@ i.icon-spinner {
   font-weight: bold;
 }
 
+/* filters */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1ch;
+  margin-top: 1rem;
+}
+
+.filters button {
+  outline: 4px solid transparent;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-black);
+  cursor: pointer;
+  opacity: .8;
+  transition: opacity .3s, outline .3s;
+}
+
+.filters button[aria-selected="true"] {
+  outline: .5ch solid;
+  opacity: 1;
+}
+
 /* day */
 .day {
   display: grid;
@@ -246,6 +270,11 @@ i.icon-spinner {
   padding: 1rem;
   background-color: var(--color-black);
   color: var(--color-white);
+}
+
+.task[aria-hidden="true"] {
+  display: none;
+  visibility: hidden;
 }
 
 .task[data-room="powder room"] {
