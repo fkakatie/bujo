@@ -77,20 +77,22 @@ i.icon-spinner {
 }
 
 /* login form */
-.login form {
+form.login {
   display: flex;
   position: relative;
+  max-width: 320px;
+  margin: auto;
   background-color: var(--color-white);
   color: var(--color-black);
   border-radius: .3rem;
   padding: 1rem;
 }
 
-.login form.invalid {
+form.login.invalid {
   outline: 3px solid var(--color-red);
 }
 
-.login form label { 
+form.login label { 
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -98,80 +100,80 @@ i.icon-spinner {
   opacity: .3;
 }
 
-.login form label[data-status="hidden"] {
+form.login label[data-status="hidden"] {
   visibility: hidden;
 }
 
-.login form input {
+form.login input {
   flex-grow: 1;
   font-family: monospace;
 }
 
-.login form .buttons {
+form.login .buttons {
   display: flex;
   gap: .3rem;
 }
 
-.login form button,
-.login form button i {
+form.login button,
+form.login button i {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.login form button {
+form.login button {
   padding: .5rem;
   border-radius: .3rem;
   cursor: pointer;
   transition: background-color .3s;
 }
 
-.login form button svg {
+form.login button svg {
   height: 1rem;
   width: 1rem;
 }
 
-.login form button i.icon-eye,
-.login form button i.icon-unlock {
+form.login button i.icon-eye,
+form.login button i.icon-unlock {
   display: none;
 }
 
-.login form button:hover,
-.login form button:focus {
+form.login button:hover,
+form.login button:focus {
   background-color: var(--color-gray);
 }
 
-.login form button[data-status="authenticating"] {
+form.login button[data-status="authenticating"] {
   background-color: var(--color-green);
   color: var(--color-white);
 }
 
-.login form button[aria-selected="true"] i.icon-eye,
-.login form button[aria-selected="false"] i.icon-eye-closed,
-.login form button:hover i.icon-unlock,
-.login form button:focus i.icon-unlock,
-.login form button[aria-selected="true"]:hover i.icon-eye-closed,
-.login form button[aria-selected="true"]:focus i.icon-eye-closed,
-.login form button[aria-selected="false"]:hover i.icon-eye,
-.login form button[aria-selected="false"]:focus i.icon-eye {
+form.login button[aria-selected="true"] i.icon-eye,
+form.login button[aria-selected="false"] i.icon-eye-closed,
+form.login button:hover i.icon-unlock,
+form.login button:focus i.icon-unlock,
+form.login button[aria-selected="true"]:hover i.icon-eye-closed,
+form.login button[aria-selected="true"]:focus i.icon-eye-closed,
+form.login button[aria-selected="false"]:hover i.icon-eye,
+form.login button[aria-selected="false"]:focus i.icon-eye {
   display: flex;
 }
 
-.login form button[aria-selected="true"] i.icon-eye-closed,
-.login form button[aria-selected="false"] i.icon-eye,
-.login form button:hover i.icon-lock,
-.login form button:focus i.icon-lock,
-.login form button[aria-selected="true"]:hover i.icon-eye,
-.login form button[aria-selected="true"]:focus i.icon-eye,
-.login form button[aria-selected="false"]:hover i.icon-eye-closed,
-.login form button[aria-selected="false"]:focus i.icon-eye-closed,
-.login form button[data-status="authenticating"] i.icon-lock,
-.login form button[data-status="authenticating"] i.icon-unlock {
+form.login button[aria-selected="true"] i.icon-eye-closed,
+form.login button[aria-selected="false"] i.icon-eye,
+form.login button:hover i.icon-lock,
+form.login button:focus i.icon-lock,
+form.login button[aria-selected="true"]:hover i.icon-eye,
+form.login button[aria-selected="true"]:focus i.icon-eye,
+form.login button[aria-selected="false"]:hover i.icon-eye-closed,
+form.login button[aria-selected="false"]:focus i.icon-eye-closed,
+form.login button[data-status="authenticating"] i.icon-lock,
+form.login button[data-status="authenticating"] i.icon-unlock {
   display: none;
 }
 
 @media (width >= 600px) {
-  .login form #toggle-password {
+  form.login #toggle-password {
     display: none;
   }
 }
